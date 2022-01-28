@@ -45,10 +45,13 @@ public class PostagemController {
 	}
 	
 	@GetMapping("/titulo/{titulo}")
-	public ResponseEntity<Postagem> getByTitulo(@PathVariable String titulo){
-		  return repository.getByTituloContainingIgnoreCase(titulo)
-				  .map(resp -> ResponseEntity.ok(resp))
-				   .orElse(ResponseEntity.noContent().build());
+	public ResponseEntity<List<Postagem>> getByTitulo(@PathVariable String titulo){
+		  List<Postagem> list = repository.getByTituloContainingIgnoreCase(titulo);
+		  if(list.isEmpty()) {
+			  return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		  } else {
+			  return ResponseEntity.status(HttpStatus.OK).body(list);
+		  }
 	}
 	
 	@PostMapping
