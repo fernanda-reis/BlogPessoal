@@ -3,6 +3,8 @@ package com.generation.blogpessoal.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.blogpessoal.model.Tema;
 import com.generation.blogpessoal.repository.TemaRepository;
+import com.generation.blogpessoal.util.Tipo;
 
 @RestController
 @RequestMapping("/tema")
@@ -45,10 +48,13 @@ public class TemaController {
 	}
 	
 	@GetMapping("/descricao/{descricao}")
-	public ResponseEntity<Tema> findByDescricaoTema(@PathVariable String descricao){
-		return repository.findByDescricaoContainingIgnoreCase(descricao)
-				.map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.noContent().build());
+	public ResponseEntity<List<Tema>> findAllByDescricaoTema(@PathVariable String descricao){
+		List<Tema> list = repository.findAllByDescricaoContainingIgnoreCase(descricao);
+		if(list.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} else {
+			return ResponseEntity.ok(list);
+		}
 	}
 	
 	@PostMapping

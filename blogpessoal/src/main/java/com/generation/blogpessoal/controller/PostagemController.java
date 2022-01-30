@@ -3,6 +3,8 @@ package com.generation.blogpessoal.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.blogpessoal.model.Postagem;
+import com.generation.blogpessoal.model.Tema;
 import com.generation.blogpessoal.repository.PostagemRepository;
+import com.generation.blogpessoal.util.Tipo;
 
 @RestController
 @RequestMapping("/postagens")
@@ -52,6 +56,16 @@ public class PostagemController {
 		  } else {
 			  return ResponseEntity.status(HttpStatus.OK).body(list);
 		  }
+	}
+	
+	@GetMapping("/tipo/{tipo}")
+	public ResponseEntity<List<Postagem>> findAllByTipo(@Valid @PathVariable Tipo tipo){
+		List<Postagem> list = repository.findAllByTipo(tipo);
+		if(list.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} else {
+			return ResponseEntity.ok(list);
+		}
 	}
 	
 	@PostMapping
