@@ -45,6 +45,11 @@ public class Postagem {
 	
 	@Enumerated(EnumType.STRING)
 	public Tipo tipo;
+	
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	@JsonIgnoreProperties("postagens")
+	private Usuario usuario;
 
 	public Long getId() {
 		return id;
