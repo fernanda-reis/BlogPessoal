@@ -20,7 +20,6 @@ public class UsuarioService {
 
 	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		// verificar se usuario já existe
 		Optional<Usuario> retorno;
 		Optional<Usuario> user = repository.findByUsuario(usuario.getUsuario());
 

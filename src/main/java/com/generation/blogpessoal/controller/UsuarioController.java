@@ -44,6 +44,17 @@ public class UsuarioController {
 		}
 	}
 	
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity<List<Usuario>> findaAllByNome(String nome){
+		List<Usuario> list = repository.findAllByNomeContainingIgnoreCase(nome);
+		
+		if(list.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.ok().body(list);
+		}
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> findByID(@PathVariable long id){
 		return repository.findById(id)
