@@ -24,7 +24,7 @@ public class SwaggerConfig {
 					.version("v0.0.1")
 				.license(new License()
 					.name("generation.org.br")
-					.url("http://springdoc.org"))
+					.url("https://brazil.generation.org/"))
 				.contact(new Contact()
 					.name("Fernanda Soares")
 					.url("https://www.linkedin.com/in/fernanda-sreis/")
