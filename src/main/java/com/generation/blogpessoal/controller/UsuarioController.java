@@ -3,10 +3,13 @@ package com.generation.blogpessoal.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +37,7 @@ public class UsuarioController {
 	private UsuarioRepository repository;
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> findAll(){
+	public ResponseEntity<List<Usuario>> getAll(){
 		List<Usuario> list = repository.findAll();
 		
 		if(list.isEmpty()) {
@@ -63,14 +66,14 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/logar")
-	public ResponseEntity<UserLogin> Autentication(@RequestBody Optional<UserLogin> user){
+	public ResponseEntity<UserLogin> Autentication(@Valid @RequestBody Optional<UserLogin> user){
 		return service.Logar(user)
 				.map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());	
 	}
 	
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuario> Post(@RequestBody Usuario user){
+	public ResponseEntity<Usuario> Post(@Valid @RequestBody Usuario user){
 		return service.CadastrarUsuario(user)
 				.map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
 				.orElseGet(() -> { 
@@ -79,10 +82,22 @@ public class UsuarioController {
 	}
 	
 	@PutMapping("/atualizar")
-	public ResponseEntity<Usuario> Put(@RequestBody Usuario user){
+	public ResponseEntity<Usuario> Put(@Valid @RequestBody Usuario user){
 		return repository.findById(user.getId())
 				.map(resp -> ResponseEntity.ok(repository.save(user)))
 				.orElse(ResponseEntity.notFound().build());
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@DeleteMapping("/{id}")
+	public ResponseEntity Delete(@PathVariable long id) {
+		Optional<Usuario> optional = repository.findById(id);
+		if(optional.isPresent()) {
+			repository.deleteById(id);
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 }

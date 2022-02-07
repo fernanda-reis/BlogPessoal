@@ -21,11 +21,14 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@NotNull(message = "O atributo nome é obrigatório.")
 	@Size(min = 2, max = 100, message = "O nome deve conter pelo menos 2 caracteres.")
 	private String nome;
+	
+	@Size(max = 5000, message = "O link da foto não pode ser maior do que 5000 caracteres")
+	private String foto;
 	
 	@Email(message = "O atributo usuario deve ser um email.")
 	@NotNull(message = "O atributo usuario é obrigatório.")
@@ -33,7 +36,7 @@ public class Usuario {
 	private String usuario;
 	
 	@NotNull(message = "O atributo senha é obrigatório.")
-	@Size(min = 4, max = 100, message = "A senha deve conter pelo menos 5 caracteres.")
+	@Size(min = 4, message = "A senha deve conter pelo menos 5 caracteres.")
 	private String senha;
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
@@ -41,20 +44,21 @@ public class Usuario {
 	private List<Postagem> postagens;
 	
 	
-	public Usuario(long id, String nome, String usuario, String senha) {
+	public Usuario(long id, String nome, String foto, String usuario, String senha) {
 		this.id = id;
 		this.nome = nome;
+		this.foto = foto;
 		this.usuario = usuario;
 		this.senha = senha;
 	}
 
 	public Usuario() {}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -64,6 +68,14 @@ public class Usuario {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public String getUsuario() {
@@ -81,5 +93,15 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public List<Postagem> getPostagens() {
+		return postagens;
+	}
+
+	public void setPostagens(List<Postagem> postagens) {
+		this.postagens = postagens;
+	}
+
+	
 
 }

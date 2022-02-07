@@ -27,13 +27,13 @@ public class UsuarioRepositoryTest {
 	@BeforeAll
 	void start() {
 		
-		usuarioRepository.save(new Usuario(0L, "João da Silva", "joao@email.com", "123456"));
+		usuarioRepository.save(new Usuario(0L, "João da Silva", "https://conteudo.imguol.com.br/c/entretenimento/29/2015/08/25/mordecai-e-rigby-personagens-do-desenho-apenas-um-show-1440532277679_615x470.jpg", "joao@email.com", "123456"));
 		
-		usuarioRepository.save(new Usuario(0L, "Manuela da Silva", "manuela@email.com", "123456"));
+		usuarioRepository.save(new Usuario(0L, "Manuela da Silva", "https://conteudo.imguol.com.br/c/entretenimento/29/2015/08/25/mordecai-e-rigby-personagens-do-desenho-apenas-um-show-1440532277679_615x470.jpg","manuela@email.com", "123456"));
 		
-		usuarioRepository.save(new Usuario(0L, "Adriana da Silva", "adriana@email.com", "123456"));
+		usuarioRepository.save(new Usuario(0L, "Adriana da Silva", "https://conteudo.imguol.com.br/c/entretenimento/29/2015/08/25/mordecai-e-rigby-personagens-do-desenho-apenas-um-show-1440532277679_615x470.jpg", "adriana@email.com", "123456"));
 		
-		usuarioRepository.save(new Usuario(0L, "Paulo Antunes", "paulo@email.com", "123456"));
+		usuarioRepository.save(new Usuario(0L, "Paulo Antunes", "https://conteudo.imguol.com.br/c/entretenimento/29/2015/08/25/mordecai-e-rigby-personagens-do-desenho-apenas-um-show-1440532277679_615x470.jpg", "paulo@email.com", "123456"));
 		
 	}
 	

@@ -24,14 +24,14 @@ import com.generation.blogpessoal.util.Tipo;
 
 @RestController
 @RequestMapping("/tema")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TemaController {
 
 	@Autowired
 	private TemaRepository repository;
 	
 	@GetMapping
-	public ResponseEntity<List<Tema>> findAllTema(){
+	public ResponseEntity<List<Tema>> getAll(){
 		List<Tema> list = repository.findAll();
 		if(list.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -41,7 +41,7 @@ public class TemaController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Tema> findByIDTema(@PathVariable long id){
+	public ResponseEntity<Tema> findByID(@PathVariable long id){
 		return repository.findById(id)
 				.map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
@@ -58,12 +58,12 @@ public class TemaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Tema> postTema(@RequestBody Tema tema){
+	public ResponseEntity<Tema> postTema(@Valid @RequestBody Tema tema){
 		return ResponseEntity.ok(repository.save(tema));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Tema> putTema(@RequestBody Tema tema){
+	public ResponseEntity<Tema> putTema(@Valid @RequestBody Tema tema){
 		return repository.findById(tema.getId())
 				.map(resp -> ResponseEntity.ok(repository.save(tema)))
 				.orElse(ResponseEntity.notFound().build());

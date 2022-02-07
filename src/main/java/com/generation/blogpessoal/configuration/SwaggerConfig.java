@@ -28,7 +28,7 @@ public class SwaggerConfig {
 				.contact(new Contact()
 					.name("Fernanda Soares")
 					.url("https://www.linkedin.com/in/fernanda-sreis/")
-					.email("")))
+					.email("fernandasoares.reis1@gmail.com")))
 				.externalDocs(new ExternalDocumentation()
 					.description("Github")
 					.url("https://github.com/fernanda-reis/BlogPessoal"));
@@ -43,8 +43,8 @@ public class SwaggerConfig {
 				ApiResponses apiResponses = operation.getResponses();
 
 				apiResponses.addApiResponse("200", createApiResponse("Sucesso!"));
-				apiResponses.addApiResponse("201", createApiResponse("Objeto Persistido!"));
-				apiResponses.addApiResponse("204", createApiResponse("Não Contem!"));
+				apiResponses.addApiResponse("201", createApiResponse("Objeto Criado!"));
+				apiResponses.addApiResponse("204", createApiResponse("Não contém dados!"));
 				apiResponses.addApiResponse("400", createApiResponse("Erro na Requisição!"));
 				apiResponses.addApiResponse("401", createApiResponse("Acesso Não Autorizado!"));
 				apiResponses.addApiResponse("404", createApiResponse("Objeto Não Encontrado!"));
