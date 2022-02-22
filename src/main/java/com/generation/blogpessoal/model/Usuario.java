@@ -39,11 +39,11 @@ public class Usuario {
 	@Size(min = 4, message = "A senha deve conter pelo menos 5 caracteres.")
 	private String senha;
 	
+	private String tipo;
+	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagens;
-	
-	private String tipo;
 	
 	
 	public Usuario(long id, String nome, String foto, String usuario, String senha, String tipo) {
@@ -97,14 +97,6 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public List<Postagem> getPostagens() {
-		return postagens;
-	}
-
-	public void setPostagens(List<Postagem> postagens) {
-		this.postagens = postagens;
-	}
-
 	public String getTipo() {
 		return tipo;
 	}
@@ -112,7 +104,13 @@ public class Usuario {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
 	
+	public List<Postagem> getPostagens() {
+		return postagens;
+	}
+
+	public void setPostagens(List<Postagem> postagens) {
+		this.postagens = postagens;
+	}
 
 }
