@@ -43,13 +43,16 @@ public class Usuario {
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagens;
 	
+	private String tipo;
 	
-	public Usuario(long id, String nome, String foto, String usuario, String senha) {
+	
+	public Usuario(long id, String nome, String foto, String usuario, String senha, String tipo) {
 		this.id = id;
 		this.nome = nome;
 		this.foto = foto;
 		this.usuario = usuario;
 		this.senha = senha;
+		this.tipo = tipo;
 	}
 
 	public Usuario() {}
@@ -100,6 +103,14 @@ public class Usuario {
 
 	public void setPostagens(List<Postagem> postagens) {
 		this.postagens = postagens;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	
