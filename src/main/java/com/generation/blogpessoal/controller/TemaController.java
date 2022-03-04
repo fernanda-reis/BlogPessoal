@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.blogpessoal.model.Tema;
 import com.generation.blogpessoal.repository.TemaRepository;
-import com.generation.blogpessoal.util.Tipo;
 
 @RestController
 @RequestMapping("/tema")

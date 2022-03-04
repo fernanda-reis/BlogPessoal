@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.generation.blogpessoal.model.Postagem;
 import com.generation.blogpessoal.model.Tema;
 import com.generation.blogpessoal.repository.PostagemRepository;
-import com.generation.blogpessoal.util.Tipo;
 
 @RestController
 @RequestMapping("/postagens")
@@ -59,8 +58,8 @@ public class PostagemController {
 	}
 	
 	@GetMapping("/tipo/{tipo}")
-	public ResponseEntity<List<Postagem>> findAllByTipo(@Valid @PathVariable Tipo tipo){
-		List<Postagem> list = repository.findAllByTipo(tipo);
+	public ResponseEntity<List<Postagem>> findAllByTipo(@Valid @PathVariable String tipo){
+		List<Postagem> list = repository.findAllByTipoContainingIgnoreCase(tipo);
 		if(list.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		} else {
