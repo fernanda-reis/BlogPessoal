@@ -19,12 +19,11 @@ public class UsuarioService {
 	private UsuarioRepository repository;
 
 	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		Optional<Usuario> retorno;
 		Optional<Usuario> user = repository.findByUsuario(usuario.getUsuario());
 
 		if (user.isEmpty()) {
-			String senhaEncoder = encoder.encode(usuario.getSenha());
+			String senhaEncoder = criptografarSenha(usuario.getSenha());
 			usuario.setSenha(senhaEncoder);
 			repository.save(usuario);
 			retorno = Optional.of(usuario);
@@ -35,13 +34,44 @@ public class UsuarioService {
 		
 	}
 
+	public String criptografarSenha(String senha) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder.encode(senha);
+	}
+	
+	private boolean compararSenhas(String senhaDigitada, String senhaBanco) {
+
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		return encoder.matches(senhaDigitada, senhaBanco);
+
+	}
+	
+	public Optional<Usuario> AtualizarUsuario(Usuario Usuario){
+		Optional<Usuario> UsuarioVerifica = repository.findById(Usuario.getId());
+		if(UsuarioVerifica.isPresent()) {
+			if(compararSenhas(Usuario.getSenha(), UsuarioVerifica.get().getSenha())) {
+				UsuarioVerifica.get().setUsuario(Usuario.getUsuario());
+				UsuarioVerifica.get().setFoto(Usuario.getFoto());
+				UsuarioVerifica.get().setNome(Usuario.getNome());
+				UsuarioVerifica.get().setTipo(Usuario.getTipo());
+				
+				repository.save(UsuarioVerifica.get());
+				return UsuarioVerifica;
+			}
+		}
+		
+		return Optional.empty();
+	}
+	
+	
 	public Optional<UserLogin> Logar(Optional<UserLogin> user) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		Optional<Usuario> usuario = repository.findByUsuario(user.get().getUsuario());
 
 		if (usuario.isPresent()) {
-			if (encoder.matches(user.get().getSenha(), usuario.get().getSenha())) {
+			if(encoder.matches(user.get().getSenha(), usuario.get().getSenha())) {
 
 				String auth = user.get().getUsuario() + ":" + user.get().getSenha();
 				byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));

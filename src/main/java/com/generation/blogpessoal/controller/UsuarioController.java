@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.generation.blogpessoal.model.Postagem;
 import com.generation.blogpessoal.model.UserLogin;
 import com.generation.blogpessoal.model.Usuario;
 import com.generation.blogpessoal.repository.UsuarioRepository;
@@ -81,11 +80,13 @@ public class UsuarioController {
 				});
 	}
 	
-	@PutMapping("/atualizar")
-	public ResponseEntity<Usuario> Put(@Valid @RequestBody Usuario user){
-		return repository.findById(user.getId())
-				.map(resp -> ResponseEntity.ok(repository.save(user)))
-				.orElse(ResponseEntity.notFound().build());
+	@PutMapping
+	public ResponseEntity<Usuario> putUsuario(@RequestBody Usuario user) {
+		return service.AtualizarUsuario(user)
+				.map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
+				.orElseGet(() -> { 
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados incorretos!");
+				});
 	}
 	
 	@SuppressWarnings("rawtypes")
